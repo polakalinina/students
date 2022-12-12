@@ -36,6 +36,8 @@
             this.deleteButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.search = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -123,8 +125,26 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "StudentsTableForm";
             this.Text = "Form1";
+            // 
+            // search
+            // 
+            this.search.Location = new System.Drawing.Point(18, 50);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(201, 20);
+            this.search.TabIndex = 2;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            // 
+            // searchButton
+            // 
+            this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.searchButton.Location = new System.Drawing.Point(18, 265);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(70, 20);
+            this.searchButton.TabIndex = 1;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
         }
 
         private System.Windows.Forms.Label label1;

@@ -11,10 +11,10 @@ namespace WindowsFormsApp1.Forms.Students
         {
             InitializeComponent();
 
-            LoadTable();
+            LoadTable(null);
         }
 
-        private void LoadTable()
+        private void LoadTable(string searchString)
         {
             var table = new DataTable();
 
@@ -27,7 +27,15 @@ namespace WindowsFormsApp1.Forms.Students
             var groups = GroupsRepository.GetGroups();
             foreach (var student in students)
             {
-                table.LoadDataRow(student.ToDataRow(groups), LoadOption.Upsert);
+                if (searchString != null)
+                {
+                    var group = groups.FirstOrDefault(group => group.Number == searchString);
+                    
+                    if (student.FirstName == searchString || student.LastName == searchString || group != null) 
+                    {
+                        table.LoadDataRow(student.ToDataRow(groups), LoadOption.Upsert);
+                    }
+                }
             }
 
             dataGridView1.DataSource = table;
@@ -58,6 +66,12 @@ namespace WindowsFormsApp1.Forms.Students
             deleteForm.StartPosition = FormStartPosition.Manual;
             deleteForm.Show();
             deleteForm.Closed += delegate { LoadTable(); };
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            var searchString = search.Text;
+            LoadTable(searchString);
         }
     }
 }

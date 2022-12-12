@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsApp1.Repositories;
 
@@ -27,14 +28,12 @@ namespace WindowsFormsApp1.Forms.Students
             var groups = GroupsRepository.GetGroups();
             foreach (var student in students)
             {
-                if (searchString != null)
+                if (string.IsNullOrEmpty(searchString) ||
+                    student.FirstName.Contains(searchString) ||
+                    student.LastName.Contains(searchString) ||
+                    groups.First(group => group.Id == student.GroupId).Number.Contains(searchString))
                 {
-                    var studentGroup = groups.FirstOrDefault(group => group.Number == searchString);
-                    
-                    if (student.FirstName == searchString || student.LastName == searchString || studentGroup != null) 
-                    {
-                        table.LoadDataRow(student.ToDataRow(groups), LoadOption.Upsert);
-                    }
+                    table.LoadDataRow(student.ToDataRow(groups), LoadOption.Upsert);
                 }
             }
 
@@ -47,7 +46,7 @@ namespace WindowsFormsApp1.Forms.Students
             addForm.Location = Location;
             addForm.StartPosition = FormStartPosition.Manual;
             addForm.Show();
-            addForm.Closed += delegate { LoadTable(); };
+            addForm.Closed += delegate { LoadTable(null); };
         }
 
         private void updateButton_Click(object sender, EventArgs e)
@@ -56,7 +55,7 @@ namespace WindowsFormsApp1.Forms.Students
             updateForm.Location = Location;
             updateForm.StartPosition = FormStartPosition.Manual;
             updateForm.Show();
-            updateForm.Closed += delegate { LoadTable(); };
+            updateForm.Closed += delegate { LoadTable(null); };
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -65,7 +64,7 @@ namespace WindowsFormsApp1.Forms.Students
             deleteForm.Location = Location;
             deleteForm.StartPosition = FormStartPosition.Manual;
             deleteForm.Show();
-            deleteForm.Closed += delegate { LoadTable(); };
+            deleteForm.Closed += delegate { LoadTable(null); };
         }
 
         private void searchButton_Click(object sender, EventArgs e)

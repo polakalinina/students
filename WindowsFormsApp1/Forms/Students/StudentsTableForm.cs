@@ -29,9 +29,9 @@ namespace WindowsFormsApp1.Forms.Students
             {
                 if (searchString != null)
                 {
-                    var group = groups.FirstOrDefault(group => group.Number == searchString);
+                    var studentGroup = groups.FirstOrDefault(group => group.Number == searchString);
                     
-                    if (student.FirstName == searchString || student.LastName == searchString || group != null) 
+                    if (student.FirstName == searchString || student.LastName == searchString || studentGroup != null) 
                     {
                         table.LoadDataRow(student.ToDataRow(groups), LoadOption.Upsert);
                     }
